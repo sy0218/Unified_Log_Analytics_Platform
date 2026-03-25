@@ -1,0 +1,17 @@
+filebeat.inputs:
+  - type: filestream
+    enabled: true
+    paths:
+      - /work/jsy/test.txt
+
+# Kafka 대신 로컬 파일 출력
+output.file:
+  path: "/work/jsy"
+  filename: "test.log"
+
+processors:
+  - add_host_metadata: ~   # 호스트 정보 자동 추가
+  - include_fields:
+      fields: ["@timestamp", "name", "message"]
+
+logging.level: info       # Filebeat 내부 로그 출력 레벨

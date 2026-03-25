@@ -16,3 +16,13 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+
+  postgres:
+    image: postgres:14
+    container_name: job_postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - /Data_project_job/docker_image/postgres/pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=1234

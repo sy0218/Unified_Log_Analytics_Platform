@@ -1,0 +1,7 @@
+kafka-topics.sh \
+  --create \
+  --bootstrap-server sn1:9092 \
+  --replication-factor 3 \
+  --partitions 3 \
+  --topic system_syslog_log \
+  --config retention.ms=$((3*24*60*60*1000))
