@@ -11,6 +11,12 @@
 ---
 <br><br>
 
+# 🏗️ **플랫폼 아키텍처**
+![아키텍처](https://github.com/user-attachments/assets/9a66f927-486e-4503-831d-e165f5d61a2f)
+
+---
+<br><br>
+
 # 🛠️ **Trouble Shooting**
 - ✅ **Ansible 자동화 도입! 다중 서버 환경 구성 & 환경 구축 시간 폭발적 단축!** → **[`📘 정리 문서`](./docs/trouble/ansible.md)**
 ---
