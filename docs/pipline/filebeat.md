@@ -13,6 +13,12 @@
 ---
 <br>
 
+## 🔄 로그 수집 파이프라인
+![Pipline](https://github.com/user-attachments/assets/04997001-1414-4e2c-8d59-f4ea4f23336f)
+
+---
+<br>
+
 ## 🧵 Kafka 토픽 구성
 ```bash
 __consumer_offsets
