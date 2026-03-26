@@ -1,0 +1,12 @@
+- type: filestream
+  id: dmesg_input
+  enabled: true
+  paths:
+    - /var/log/dmesg
+  fields:
+    kafka_topic: "system_dmesg_log"
+  fields_under_root: true
+  processors:
+    - add_host_metadata: ~
+    - include_fields:
+        fields: ["host.name", "message", "kafka_topic"]

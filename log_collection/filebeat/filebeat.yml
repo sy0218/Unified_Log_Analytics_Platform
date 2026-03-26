@@ -1,17 +1,31 @@
-filebeat.inputs:
-  - type: filestream
-    enabled: true
-    paths:
-      - /work/jsy/test.txt
+filebeat.config.inputs:
+  enabled: true
+  path: '/etc/filebeat/inputs/*.yml'
+  reload.enabled: true
 
-# Kafka 대신 로컬 파일 출력
-output.file:
-  path: "/work/jsy"
-  filename: "test.log"
+# Kafka 출력 설정
+output.kafka:
+  hosts: ["192.168.122.60:9092", "192.168.122.61:9092", "192.168.122.62:9092"]
+  topic: '%{[kafka_topic]}'
+  required_acks: 1
+  codec.format:
+     string: '%{[@timestamp]} %{[host.name]} %{[message]}'
 
-processors:
-  - add_host_metadata: ~   # 호스트 정보 자동 추가
-  - include_fields:
-      fields: ["@timestamp", "name", "message"]
 
-logging.level: info       # Filebeat 내부 로그 출력 레벨
+# 로컬 파일로 저장 설정
+#output.file:
+#  path: "/etc/filebeat"
+#  filename: "test.log"
+#  permissions: 0644
+#  codec.format:
+#    string: '%{[@timestamp]} %{[host.name]} %{[message]}'
+
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat.log
+  keepfiles: 3
+  permissions: 0644
+logging.to_syslog: false
+logging.to_journal: false

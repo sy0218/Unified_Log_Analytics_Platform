@@ -1,0 +1,12 @@
+- type: filestream
+  id: authlog_input
+  enabled: true
+  paths:
+    - /var/log/auth.log
+  fields:
+    kafka_topic: "system_auth_log"
+  fields_under_root: true
+  processors:
+    - add_host_metadata: ~
+    - include_fields:
+        fields: ["host.name", "message", "kafka_topic"]

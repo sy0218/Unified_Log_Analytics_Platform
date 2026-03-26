@@ -47,7 +47,7 @@
 
 | **카테고리** | **서비스** | **설명** |
 |--------------|------------|----------|
-| **수집** | 📡 `filebeat.service` | **시스템 로그 수집** → **[`📘 filebeat`](./docs/collector_service.md)** |
+| **수집** | 📡 `filebeat.service` | **시스템 로그 수집** → **[`📘 filebeat`](./docs/pipline/filebeat.md)** |
 
 ---
 <br><br>

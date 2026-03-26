@@ -1,0 +1,12 @@
+- type: filestream
+  id: dpkg_input
+  enabled: true
+  paths:
+    - /var/log/dpkg.log
+  fields:
+    kafka_topic: "system_dpkg_log"
+  fields_under_root: true
+  processors:
+    - add_host_metadata: ~
+    - include_fields:
+        fields: ["host.name", "message", "kafka_topic"]
