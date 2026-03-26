@@ -12,7 +12,9 @@
 <br><br>
 
 # 🏗️ **플랫폼 아키텍처**
-![아키텍처](https://github.com/user-attachments/assets/9a66f927-486e-4503-831d-e165f5d61a2f)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9a66f927-486e-4503-831d-e165f5d61a2f" width="200%"/>
+</p>
 
 ---
 <br><br>
