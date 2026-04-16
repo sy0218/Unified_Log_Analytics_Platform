@@ -1,0 +1,80 @@
+version: "3.9"
+
+x-airflow-common: &airflow-common
+  image: apache/airflow:3.1.5
+  env_file:
+    - ./airflow.env
+  volumes:
+    - ${AIRFLOW_HOME}/dags:/opt/airflow/dags
+    - ${AIRFLOW_HOME}/logs:/opt/airflow/logs
+    - ${AIRFLOW_HOME}/config:/opt/airflow/config
+    - ${AIRFLOW_HOME}/plugins:/opt/airflow/plugins
+  user: "${AIRFLOW_UID:-50000}:0"
+
+services:
+  postgres:
+    image: postgres:16
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7.2-bookworm
+    command: redis-server --requirepass 1234
+    ports:
+      - "6379:6379"
+    restart: always
+
+  airflow-apiserver:
+    <<: *airflow-common
+    command: api-server
+    ports:
+      - "8085:8080"
+    restart: always
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    restart: always
+
+  airflow-dag-processor:
+    <<: *airflow-common
+    command: dag-processor
+    restart: always
+
+  airflow-worker:
+    <<: *airflow-common
+    command: celery worker
+    environment:
+      DUMB_INIT_SETSID: "0"
+    restart: always
+
+  airflow-triggerer:
+    <<: *airflow-common
+    command: triggerer
+    restart: always
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        /entrypoint airflow db migrate
+        /entrypoint airflow users create \
+          --username airflow \
+          --password airflow \
+          --firstname admin \
+          --lastname user \
+          --role Admin \
+          --email admin@example.com
+    user: "0:0"
+
+volumes:
+  postgres-db-volume:

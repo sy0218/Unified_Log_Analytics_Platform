@@ -3,7 +3,7 @@
 # 출력 디렉토리
 OUTDIR="/application/node_exporter/textfile_collector"
 # 체크할 서비스 목록
-SERVICES=("filebeat" "docker" "kafka-server" "zookeeper-server")
+SERVICES=("docker" "kafka-server" "zookeeper-server")
 
 # 각 서비스 상태 체크
 for service in "${SERVICES[@]}";

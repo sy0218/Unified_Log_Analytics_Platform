@@ -26,3 +26,27 @@ services:
       - /Data_project_job/docker_image/postgres/pgdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=1234
+
+  loki:
+    image: grafana/loki:2.9.4
+    container_name: loki
+    ports:
+      - "3100:3100"
+    volumes:
+      - /work/jsy/Unified_Log_Analytics_Platform/docker_compose/loki/loki-config.yaml:/etc/loki/config.yaml
+      - /work/jsy/Unified_Log_Analytics_Platform/docker_compose/loki/data:/loki
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    command:
+      - "-config.file=/etc/loki/config.yaml"
+
+  filebeat:
+   image: docker.elastic.co/beats/filebeat:8.17.3
+   container_name: filebeat
+   user: root
+   hostname: ${HOSTNAME}
+   volumes:
+       - /var/log:/var/log:ro
+       - /work/jsy/Unified_Log_Analytics_Platform/log_collection/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+       - /work/jsy/Unified_Log_Analytics_Platform/log_collection/filebeat/inputs:/etc/filebeat/inputs:ro
+   
